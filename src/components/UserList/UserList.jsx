@@ -20,7 +20,6 @@ export default function CheckboxListSecondary() {
             })
     }, []);
 
-
     return (
         <>
             <List dense sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
