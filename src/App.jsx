@@ -5,6 +5,8 @@ import SocialApp from './components/SocialApp'
 import UserDetails from './components/UserDetails/UserDetails'
 import axios from 'axios'
 
+import { QueryClient, QueryClientProvider } from 'react-query'
+
 
 
 const router = createBrowserRouter(
@@ -38,12 +40,23 @@ const router = createBrowserRouter(
     </Route>
   ))
 
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 10000,
+      cacheTime: 300000
+    }
+  }
+
+})
+
 function App() {
 
   return (
     <>
-      {/* <CustomRoutes /> */}
-      <RouterProvider router={router} />
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router} />
+      </QueryClientProvider>
     </>
   )
 }

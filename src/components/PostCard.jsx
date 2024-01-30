@@ -9,11 +9,15 @@ import Typography from '@mui/material/Typography';
 import { red } from '@mui/material/colors';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import DeleteIcon from '@mui/icons-material/Delete';
+import PostsContext from '../providers/PostsProvider';
+import axios from 'axios';
 
-function PostCard({ authorFirstName, image, content }) {
+function PostCard({ authorFirstName, image, content, id }) {
 
   const [isLiked, setIsLiked] = useState(false);
+  const { posts, setPosts } = useContext(PostsContext);
   return (
     <Card sx={{ maxWidth: 345, mb: '3rem' }}>
       <CardHeader
@@ -45,11 +49,20 @@ function PostCard({ authorFirstName, image, content }) {
           {
             (isLiked) ? <FavoriteIcon sx={{ color: red[500] }} /> : <FavoriteBorderIcon />
           }
-
+        </IconButton>
+        <IconButton aria-label="delete" onClick={(e) => {
+          e.preventDefault();
+          const newPosts = posts.filter((post) => post.id !== id);
+          axios.delete(`https://dummyapi.io/data/v1/post/${id}`, {
+            headers: { 'app-id': import.meta.env.VITE_APP_ID }
+          })
+          setPosts(newPosts);
+        }}>
+          <DeleteIcon />
         </IconButton>
       </CardActions>
 
-    </Card>
+    </Card >
   );
 }
 

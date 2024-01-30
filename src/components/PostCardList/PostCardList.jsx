@@ -13,6 +13,7 @@ function PostCardList() {
             image={post.image}
             authorFirstName={post.owner.firstName}
             key={post.id}
+            id={post.id}
         />)
     );
 }
